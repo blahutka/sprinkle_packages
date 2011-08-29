@@ -57,10 +57,10 @@ Capistrano::Configuration.instance(:must_exist).load do
       end
     end
 
-    def run(options={:verbose => true, :testing => false, :cloud => true, :capistrano => self.variables}, &block)
+    def run(options={}, capistrano = self.variables, &block)
       require 'sprinkle_packages'
-
-      Package.set_variables = options.delete(:capistrano)
+      params = {:verbose => true, :testing => true, :cloud => true}.merge!(options)
+      Package.set_variables = capistrano
       Sprinkle::OPTIONS.merge!(options)
       spr = Sprinkle::Script.new
 
