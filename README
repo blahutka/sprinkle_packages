@@ -1,0 +1,42 @@
+Sprinklie packges - Capistrano integration multistages
+
+  # Deployment blocks specify deployment specific information about a
+  # sprinkle script. An example in Capistrano task:
+  #
+  # namespace :myserver do
+
+  #  task :build do
+
+  #    sprinkle.run(:testing => true) do
+  #      load_packages    # :only => [:mysql] or :except => [:mysql]  default all
+  #
+  #      policy :test-stack, :roles => :app do
+  #        requires :mysql
+  #        requires :deploy_user
+  #        requires :nginx
+  #        requires :build_essential
+  #      end
+  #
+  #      deployment do
+  #        delivery :capistrano do
+  #          recipes 'Capfile'
+  #          recipes 'config/deploy/development.rb'
+  #        end
+  #        source do
+  #          prefix '/usr/local'
+  #          archives '/usr/local/sources'
+  #          builds '/usr/local/build'
+  #        end
+  #      end
+  #
+  #    end
+  #  end
+  # end
+  #
+  # In the Sprinkle package configuration you can use capistrano variables
+  # puts Package.fetch :rails_env   # => development
+  #
+  # package :mysql, :provides => :database do
+  # description 'MySQL Database'
+  #  apt %w( mysql-server mysql-client libmysqlclient15-dev )
+  # end
