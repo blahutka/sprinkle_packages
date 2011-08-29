@@ -1,5 +1,22 @@
-# Capistrano integration
--
+# Capistrano integration with Sprinkle gem
+
+
+You can use sprinkle configuration in capistrano tasks
+
+```
+namespace :myserver do
+
+  desc 'Build development server with Sprinkle and Vagrant gems'
+  task :build do
+    sprinkle.run(:testing => true) do
+      # sprinkle config ...
+    end
+  end
+  
+end
+```
+
+--
 #### 1. Add require directives to Capfile
 ```require 'rubygems'```
 
@@ -37,7 +54,7 @@ Capistrano task
 
 ```
 namespace :myserver do
-
+  desc 'Build development server'
   task :build do
 
     sprinkle.run(:testing => true) do
@@ -76,8 +93,8 @@ In the Sprinkle package configuration you can use capistrano variables
 
 ```
 package :mysql, :provides => :database do
-description 'MySQL Database'
-  puts Package.fetch :rails_env
-  apt %w( mysql-server mysql-client libmysqlclient15-dev )
+    description 'MySQL Database'
+    puts Package.fetch :rails_env
+    apt %w( mysql-server mysql-client libmysqlclient15-dev )
 end
 ```
