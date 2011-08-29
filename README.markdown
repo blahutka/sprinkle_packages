@@ -1,38 +1,47 @@
 # Capistrano integration
+-
+#### 1. Add require directives to Capfile
+```require 'rubygems'```
 
-* Add require directives
+```require 'sprinkle_packages/capistrano'```
+ 
 
-require 'rubygems'
-require 'sprinkle_packages/capistrano'
+#### 2. Create deployment script
 
+Mulsti stage setup
+```config/deploy/development.rb``` and ```config/deploy/development.rb```
 
-* Create deployment script
-rails-app/config/deploy/development.rb # multistage setup
-rails-app/config/deploy.rb # default setup
+or default setup
+``` config/deploy.rb```
 
-Here you can use sprinkle.run command
+In these files you can use sprinkle.run command to:
 
-** load_packages from this gem
-** setup sprinkle new packages => package(:mysql) {}
-** policy setup
-** deployment setup
-** add more sprinkle stuff
++ load_packages from this gem
++ setup sprinkle new packages => package(:mysql) {}
++ policy sprinkle setup
++ deployment sprinkle setup
++ add more sprinkle stuff
 
-* Run capistrano
- bundle exec cap development myserver :build
- bundle exec cap production myserver :build
+#### 3. Run capistrano (multistage example)
+ In your rails project
+ 
+```bundle exec cap development myserver:build```
+or
+```bundle exec cap production myserver:build```
 
 
 ## Setup example
-Capistrano integration multistages
-rails-app/config/deploy/development.rb
+Capistrano task 
+```rails-app/config/deploy/development.rb```
 
+
+```
 namespace :myserver do
 
   task :build do
 
     sprinkle.run(:testing => true) do
-      load_packages # :only => [:mysql] or :except => [:mysql]  default all
+      load_packages  #:only => [:mysql] or :except => [:mysql] or it load all packages
 
       policy :test-stack, :roles => :app do
         requires :mysql
@@ -56,11 +65,19 @@ namespace :myserver do
     end
   end
 end
+```
 
+```bundle exec cap myserver:build```
+
+
+# Variables
 In the Sprinkle package configuration you can use capistrano variables
-puts Package.fetch :rails_env => development
+```puts Package.fetch(:rails_env)      # => development```
 
-package :mysql, :provides # => :database do
+```
+package :mysql, :provides => :database do
 description 'MySQL Database'
-apt %w( mysql-server mysql-client libmysqlclient15-dev )
+  puts Package.fetch :rails_env
+  apt %w( mysql-server mysql-client libmysqlclient15-dev )
 end
+```
