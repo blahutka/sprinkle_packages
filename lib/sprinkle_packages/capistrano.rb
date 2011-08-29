@@ -61,7 +61,7 @@ Capistrano::Configuration.instance(:must_exist).load do
       require 'sprinkle_packages'
       params = {:verbose => true, :testing => true, :cloud => true}.merge!(options)
       Package.set_variables = capistrano
-      Sprinkle::OPTIONS.merge!(options)
+      Sprinkle::OPTIONS.merge!(params)
       spr = Sprinkle::Script.new
 
       def spr.load_packages(options={})
