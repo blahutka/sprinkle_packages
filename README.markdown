@@ -8,7 +8,7 @@
 
 #### 2. Create deployment script
 
-Mulsti stage setup
+Multi stage setup
 ```config/deploy/development.rb``` and ```config/deploy/development.rb```
 
 or default setup
@@ -16,21 +16,21 @@ or default setup
 
 In these files you can use sprinkle.run command to:
 
-+ load_packages from this gem
++ ```load_packages``` from this gem ```#load_packages(:except => [:nginx])```
 + setup sprinkle new packages => package(:mysql) {}
 + policy sprinkle setup
 + deployment sprinkle setup
-+ add more sprinkle stuff
++ and other sprinkle setup
 
 #### 3. Run capistrano (multistage example)
- In your rails project
+ In your rails project if your server is running and Capistrano is ready to run commands on the server:
  
 ```bundle exec cap development myserver:build```
 or
 ```bundle exec cap production myserver:build```
 
 
-## Setup example
+## Script example to build server
 Capistrano task 
 ```rails-app/config/deploy/development.rb```
 
